@@ -1,0 +1,20 @@
+{
+  "name": "admin",
+  "version": "0.0.1",
+  "authors": [
+    "baiyuxiong <baiyx@17car.com.cn>"
+  ],
+  "license": "MIT",
+  "homepage": "www.linewin.cc",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

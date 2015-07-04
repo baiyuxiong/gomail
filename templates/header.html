@@ -1,0 +1,36 @@
+{{define "header"}}<!DOCTYPE html>
+
+<html>
+<head>
+  <title>消息服务器管理中心</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap theme -->
+  <link href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/public/css/theme.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]>
+  <script src="/public/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="/public/js/ie-emulation-modes-warning.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/public/js/html5shiv.min.js"></script>
+  <script src="/public/js/respond.min.js"></script>
+  <![endif]-->
+
+  {{range .moreStyles}}
+  <link rel="stylesheet" type="text/css" href="/public/{{.}}">
+  {{end}}
+  {{range .moreScripts}}
+  <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
+  {{end}}
+</head>
+<body>
+{{end}}

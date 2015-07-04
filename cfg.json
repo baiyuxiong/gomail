@@ -1,0 +1,27 @@
+{
+  "httpAddress": "0.0.0.0:8080",
+  "sender": "smtp",
+  "jobKey": "mails",
+  "logKey": "mailLog",
+  "redis": {
+    "network": "tcp",
+    "address": "127.0.0.1:6379",
+    "password": "",
+    "timeout": "0"
+  },
+  "email": {
+    "from":"baiyuxiong@163.com",
+    "fromname":"baiyuxiong.com",
+    "replyto":"baiyuxiong@163.com"
+  },
+  "smtp": {
+    "address": "smtp.163.com:25",
+    "username": "baiyuxiong@163.com",
+    "password": "xxx"
+  },
+  "sendcloud": {
+    "address": "http://sendcloud.sohu.com/webapi/mail.send.json",
+    "api_user": "postmaster@xxx.sendcloud.org",
+    "api_key": "xxxxxx"
+  }
+}
