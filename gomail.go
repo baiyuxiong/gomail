@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"log"
 )
 
 func main() {
@@ -33,5 +34,6 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	<-sigs
 
+	log.Println("gomail quit.")
 	os.Exit(0)
 }

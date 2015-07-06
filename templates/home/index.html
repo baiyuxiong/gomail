@@ -15,25 +15,64 @@
                     <th>标题</th>
                     <th>发送时间</th>
                     <th>状态</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{range $key ,$val := .mailLogs}}
                 <tr>
-                    <td>{{$val.Mail.To}}</td>
-                    <td>{{$val.Mail.Subject}}</td>
+                    <td>{{$val.Mail.to}}</td>
+                    <td>{{$val.Mail.subject}}</td>
                     <td>{{datetime $val.SendTime}}</td>
                     <td>{{$val.Status}}</td>
+                    <td>
+                        <a href="javascript:void(0)" class="viewDetail">
+                            详情
+                        </a>
+                    </td>
+                </tr>
+                <tr style="display:none">
+                    <td colspan="5">
+                        <p><b>收件人</b>:{{$val.Mail.to}}</p>
+                        <p><b>抄送:</b>{{$val.Mail.cc}}</p>
+                        <p><b>暗送:</b>{{$val.Mail.bcc}}</p>
+                        <p><b>发送时间:</b>{{datetime $val.SendTime}}</p>
+                        <hr/>
+                        <p><b>标题:</b>{{$val.Mail.subject}}</p>
+                        <p><b>内容:</b>{{$val.Mail.message}}</p>
+                        <hr/>
+                        <p><b>日志:</b>{{$val.LogMessage}}</p>
+                    </td>
                 </tr>
                 {{end}}
                 </tbody>
             </table>
+            <ul class="pagination">
+                {{if .showPrePage}}
+                <li>
+                    <a href="/?start={{.prePageStart}}&stop={{.prePageStop}}" aria-label="Previous">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+                {{end}}
+
+                <li class="active"><a href="#">{{.currentPage}}</a></li>
+                <li>
+                    <a href="/?start={{.nextPageStart}}&stop={{.nextPageStop}}" aria-label="Next">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div> <!-- /container -->
 
 {{define "scripts"}}
 <script lang="javascript">
+    $('.viewDetail').click(function(){
+        obj = $(this);
+        obj.parent().parent().next().toggle("slow");
+    });
 </script>
 {{end}}
 

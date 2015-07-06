@@ -10,12 +10,46 @@ import (
 	"github.com/baiyuxiong/gomail/model"
 	"encoding/json"
 	"log"
+	"net/url"
+	"strconv"
 )
 
 func configRoutes() {
 	// GET
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		logs,err := mail.GetMailLog()
+
+		queries, err := url.ParseQuery(r.URL.RawQuery)
+
+		var perPage int = 20
+
+		var start int = 0
+		if err == nil && len(queries["start"]) > 0 {
+			start,_ = strconv.Atoi(queries["start"][0])
+		}
+
+		var stop int = start+perPage-1
+		if err == nil && len(queries["stop"]) > 0 {
+			stop,_ = strconv.Atoi(queries["stop"][0])
+		}
+
+		var currentPage int = start/perPage+1;
+
+		var prePageStart int= 0
+		var prePageStop int= 19
+		var nextPageStart int= 20
+		var nextPageStop int= 39
+
+		var showPrePage = false;
+		if currentPage>1{
+			showPrePage= true
+			prePageStart = (currentPage-2)*perPage
+			prePageStop = prePageStart +perPage-1
+		}
+		nextPageStart = currentPage*perPage
+		nextPageStop = nextPageStart +perPage-1
+
+
+		logs,err := mail.GetMailLog(start,stop)
 		if err != nil{
 			w.Write([]byte(err.Error()))
 			return
@@ -32,7 +66,19 @@ func configRoutes() {
 			}
 		}
 
-		Render(w,"home/index.html",map[string]interface{}{"mailLogs":mailLogs});
+		data := map[string]interface{}{
+			"mailLogs":mailLogs,
+			"start":start,
+			"stop":stop,
+			"currentPage":currentPage,
+			"showPrePage":showPrePage,
+			"prePageStart":prePageStart,
+			"prePageStop":prePageStop,
+			"nextPageStart":nextPageStart,
+			"nextPageStop":nextPageStop,
+		}
+
+		Render(w,"home/index.html",data);
 	})
 
 	// GET
