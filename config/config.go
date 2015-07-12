@@ -10,6 +10,7 @@ import (
 
 type GlobalConfig struct {
 	HttpAddress string `json:"httpAddress"`
+	Password    string `json:"password"`
 	Sender      string `json:"sender"`
 	JobKey      string `json:"jobKey"`
 	LogKey      string `json:"logKey"`
@@ -33,9 +34,10 @@ type SmtpConfig struct {
 }
 
 type SendcloudConfig struct {
-	Address  string `json:"address"`
-	Api_user string `json:"api_user"`
-	Api_key  string `json:"api_key"`
+	Address          string `json:"address"`
+	Api_user_trigger string `json:"api_user_trigger"`
+	Api_user_batch   string `json:"api_user_batch"`
+	Api_key          string `json:"api_key"`
 }
 
 type EmailConfig struct {

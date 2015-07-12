@@ -1,6 +1,7 @@
 {
   "httpAddress": "0.0.0.0:8080",
-  "sender": "smtp",
+  "password" : "123123",
+  "sender": "sendcloud",
   "jobKey": "mails",
   "logKey": "mailLog",
   "redis": {
@@ -21,7 +22,8 @@
   },
   "sendcloud": {
     "address": "http://sendcloud.sohu.com/webapi/mail.send.json",
-    "api_user": "postmaster@xxx.sendcloud.org",
-    "api_key": "xxxxxx"
+    "api_user_trigger": "",
+    "api_user_batch": "",
+    "api_key": ""
   }
 }

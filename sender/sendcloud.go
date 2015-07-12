@@ -35,8 +35,13 @@ func sendEmailBySendcloud(data string) model.EmailLog {
 	}
 	l.Mail = m
 
+	api_user := config.Config().Sendcloud.Api_user_trigger
+	if m.MailType == constants.MAIL_TYPE_BATCH{
+		api_user = config.Config().Sendcloud.Api_user_batch
+	}
+
 	values := url.Values{}
-	values["api_user"] = []string{config.Config().Sendcloud.Api_user}
+	values["api_user"] = []string{api_user}
 	values["api_key"] = []string{config.Config().Sendcloud.Api_key}
 	values["fromname"] = []string{config.Config().Email.Fromname}
 	values["replyto"] = []string{config.Config().Email.Replyto}

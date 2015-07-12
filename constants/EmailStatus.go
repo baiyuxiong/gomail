@@ -12,6 +12,11 @@ var MailStatusStrings = [...]string{
 	"ERR",
 }
 
+const (
+	MAIL_TYPE_TRIGGER string = "trigger" //触发邮件
+	MAIL_TYPE_BATCH string = "batch"	//批量邮件
+)
+
 func (s MailStatus) String() string{
 	return MailStatusStrings[s]
 }

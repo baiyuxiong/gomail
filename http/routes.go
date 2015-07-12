@@ -12,13 +12,33 @@ import (
 	"log"
 	"net/url"
 	"strconv"
+	"time"
 )
+
+var lastErrorTime time.Time = time.Now().Add(time.Minute*-2)
 
 func configRoutes() {
 	// GET
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		queries, err := url.ParseQuery(r.URL.RawQuery)
+
+		if !lastErrorTime.IsZero() && (time.Now().Sub(lastErrorTime) < time.Minute){
+			w.Write([]byte("Pls try after " + time.Now().Add(time.Minute).String()))
+			return
+		}
+
+		if (len(queries["password"]) < 1){
+			w.Write([]byte("Need password."))
+			return
+		}
+
+		password := queries["password"][0]
+		if password != config.Config().Password{
+			lastErrorTime = time.Now()
+			w.Write([]byte("I love you, Pls don't hurt me."))
+			return
+		}
 
 		var perPage int = 20
 

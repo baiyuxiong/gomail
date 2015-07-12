@@ -11,6 +11,7 @@ type Email struct {
 	BCC     string `json:"bcc"`
 	Subject string `json:"subject"`
 	Message string `json:"message"`
+	MailType string `json:"mailType"`
 }
 
 type EmailSendCloud struct {
