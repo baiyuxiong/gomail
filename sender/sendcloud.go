@@ -10,6 +10,7 @@ import (
 	"github.com/baiyuxiong/gomail/constants"
 	"io/ioutil"
 	"log"
+	"strings"
 )
 
 var SendcloudSender = &Sender{
@@ -17,10 +18,10 @@ var SendcloudSender = &Sender{
 	Run:sendEmailBySendcloud,
 }
 
-func sendEmailBySendcloud(data string) model.EmailLog {
+func sendEmailBySendcloud(data string) (l model.EmailLog) {
 	log.Println("sendEmailBySendcloud...")
 
-	l := model.EmailLog{
+	l = model.EmailLog{
 		Status:constants.MAIL_ERR,
 		SendTime:time.Now(),
 		LogMessage:"",
@@ -31,7 +32,7 @@ func sendEmailBySendcloud(data string) model.EmailLog {
 	if err != nil {
 		l.LogMessage = "handleJob - Unmarshal err: " + err.Error()+ ", data : "+ data
 		log.Println("sendEmailBySendcloud err" , l.LogMessage)
-		return l
+		return
 	}
 	l.Mail = m
 
@@ -39,6 +40,8 @@ func sendEmailBySendcloud(data string) model.EmailLog {
 	if m.MailType == constants.MAIL_TYPE_BATCH{
 		api_user = config.Config().Sendcloud.Api_user_batch
 	}
+	log.Println("sendEmailBySendcloud - Using mail type " , api_user)
+
 
 	values := url.Values{}
 	values["api_user"] = []string{api_user}
@@ -53,20 +56,46 @@ func sendEmailBySendcloud(data string) model.EmailLog {
 	values["cc"] = []string{m.CC}
 
 	//http://sendcloud.sohu.com/doc/email/#x-smtpapi
-	values["x_smtpapi"] = []string{m.X_smtpapi}
+	if len(m.X_smtpapi) > 0{
+		values["x_smtpapi"] = []string{m.X_smtpapi}
+	}
 
-	resp, err := http.PostForm(config.Config().Sendcloud.Address, values)
+	log.Println("sendEmailBySendcloud - values " , values)
+
+	client := &http.Client{}
+	req,err := http.NewRequest("POST", config.Config().Sendcloud.Address, strings.NewReader(values.Encode()))
+	if err != nil{
+		log.Println("sendEmailBySendcloud NewRequest err" , err.Error())
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	resp,err := client.Do(req)
+	if err != nil {
+		log.Println("sendEmailBySendcloud read resp error" , err.Error())
+	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	log.Println("sendEmailBySendcloud resp" , string(body))
+	l.LogMessage = "server resp: " + string(body)
 
 	if err != nil {
-		l.LogMessage = "err: " + err.Error() + ", resp: " + string(body)
 		log.Println("sendEmailBySendcloud err" , l.LogMessage)
 	}
 	defer resp.Body.Close()
 
-	l.Status = constants.MAIL_OK
-	log.Println("sendEmailBySendcloud OK")
-	return l
+	var result model.MailResp
+	err = json.Unmarshal(body,&m)
+	if err != nil{
+		log.Println("sendEmailBySendcloud Unmarshal resp error : " , err.Error())
+		l.Status = constants.MAIL_ERR
+		return
+	}
+
+	if result.Message == "success"{
+		l.Status = constants.MAIL_OK
+		log.Println("sendEmailBySendcloud OK")
+		return
+	}else{
+		l.Status = constants.MAIL_ERR
+		return
+	}
 }

@@ -25,3 +25,7 @@ type EmailLog struct {
 	SendTime   time.Time    `json:"sendTime"`
 	LogMessage string `json:"logMessage"`
 }
+
+type MailResp struct {
+	Message string `json:"message"`
+}
