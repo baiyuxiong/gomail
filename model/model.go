@@ -11,12 +11,13 @@ type Email struct {
 	BCC     string `json:"bcc"`
 	Subject string `json:"subject"`
 	Message string `json:"message"`
-	MailType string `json:"mailType"`
 }
 
 type EmailSendCloud struct {
 	Email
-	X_smtpapi string `json:"x_smtpapi"`
+	MailType          string `json:"mailType"` //trigger batch
+	Substitution_vars string `json:"substitution_vars"`
+	Template_invoke_name string `json:"template_invoke_name"`
 }
 
 type EmailLog struct {

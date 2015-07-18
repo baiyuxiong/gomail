@@ -46,19 +46,15 @@ func sendEmailBySendcloud(data string) (l model.EmailLog) {
 	values := url.Values{}
 	values["api_user"] = []string{api_user}
 	values["api_key"] = []string{config.Config().Sendcloud.Api_key}
+	values["from"] = []string{config.Config().Email.From}
+	values["substitution_vars"] = []string{m.Substitution_vars}
+	values["subject"] = []string{m.Subject}
+	values["template_invoke_name"] = []string{m.Template_invoke_name}
 	values["fromname"] = []string{config.Config().Email.Fromname}
 	values["replyto"] = []string{config.Config().Email.Replyto}
-	values["from"] = []string{config.Config().Email.From}
-	values["to"] = []string{m.To}
-	values["subject"] = []string{m.Subject}
 	values["html"] = []string{m.Message}
 	values["bcc"] = []string{m.BCC}
 	values["cc"] = []string{m.CC}
-
-	//http://sendcloud.sohu.com/doc/email/#x-smtpapi
-	if len(m.X_smtpapi) > 0{
-		values["x_smtpapi"] = []string{m.X_smtpapi}
-	}
 
 	log.Println("sendEmailBySendcloud - values " , values)
 
@@ -74,16 +70,17 @@ func sendEmailBySendcloud(data string) (l model.EmailLog) {
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
-	log.Println("sendEmailBySendcloud resp" , string(body))
-	l.LogMessage = "server resp: " + string(body)
 
 	if err != nil {
 		log.Println("sendEmailBySendcloud err" , l.LogMessage)
 	}
 	defer resp.Body.Close()
 
+	log.Println("sendEmailBySendcloud resp" , string(body))
+	l.LogMessage = "server resp: " + string(body)
+
 	var result model.MailResp
-	err = json.Unmarshal(body,&m)
+	err = json.Unmarshal(body,&result)
 	if err != nil{
 		log.Println("sendEmailBySendcloud Unmarshal resp error : " , err.Error())
 		l.Status = constants.MAIL_ERR
@@ -95,6 +92,7 @@ func sendEmailBySendcloud(data string) (l model.EmailLog) {
 		log.Println("sendEmailBySendcloud OK")
 		return
 	}else{
+		log.Println("sendEmailBySendcloud err")
 		l.Status = constants.MAIL_ERR
 		return
 	}
