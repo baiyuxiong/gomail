@@ -144,7 +144,7 @@ func (m *MailClient)GetMailLog(start int,stop int) (reply interface{}, err error
 
 	reply, err = m.LogConn.Do("LRANGE", config.Config().LogKey, start, stop)
 	if err != nil {
-		log.Println("initRedisConn - reply ", reply, ",error : ", err.Error())
+		log.Println("GetMailLog - reply ", reply, ",error : ", err.Error())
 	}
 
 	return

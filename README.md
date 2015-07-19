@@ -6,8 +6,8 @@ Doc in English click [here](https://github.com/baiyuxiong/gomail/blob/master/REA
 # 安装
 
 ````
-go get githuc.com/baiyuxiong/gomail
-cd $GOPATH/src/githuc.com/baiyuxiong/gomail
+go get github.com/baiyuxiong/gomail
+cd $GOPATH/src/github.com/baiyuxiong/gomail
 bower install
 go run gomain.go
 ````
