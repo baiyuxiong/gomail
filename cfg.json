@@ -1,6 +1,7 @@
 {
   "httpAddress": "0.0.0.0:8080",
-  "password" : "123123",
+  "username": "admin",
+  "password": "",
   "sender": "sendcloud",
   "jobKey": "mails",
   "logKey": "mailLog",
@@ -11,17 +12,17 @@
     "timeout": "0"
   },
   "email": {
-    "from":"baiyuxiong@163.com",
-    "fromname":"baiyuxiong.com",
-    "replyto":"baiyuxiong@163.com"
+    "from": "",
+    "fromname": "",
+    "replyto": ""
   },
   "smtp": {
     "address": "smtp.163.com:25",
-    "username": "baiyuxiong@163.com",
+    "username": "xxx@163.com",
     "password": "xxx"
   },
   "sendcloud": {
-    "address": "http://sendcloud.sohu.com/webapi/mail.send.json",
+    "address": "http://sendcloud.sohu.com/webapi/mail.send_template.json",
     "api_user_trigger": "",
     "api_user_batch": "",
     "api_key": ""

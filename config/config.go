@@ -10,6 +10,7 @@ import (
 
 type GlobalConfig struct {
 	HttpAddress string `json:"httpAddress"`
+	Username	string `json:"username"`
 	Password    string `json:"password"`
 	Sender      string `json:"sender"`
 	JobKey      string `json:"jobKey"`
