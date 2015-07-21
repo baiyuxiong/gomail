@@ -16,6 +16,8 @@ go run gomain.go
 cfg.json
 
 * httpAddress: 查看邮件日志的WEB地址
+* username: 登录用户名
+* password: 登录密码
 * sender: 邮件发送方式，支持"smtp"或者"sendcloud"
 * jobKey: redis中的读取邮件记录的LIST名称，通过"BRPOP $jobKey 0" 的方式使用
 * logKey: redis中存取邮件发送日志的LIST名称，通过"LPUSH $logKey %log%"方式存入日志
