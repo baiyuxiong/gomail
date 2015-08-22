@@ -6,7 +6,7 @@ import (
 	"github.com/baiyuxiong/gomail/model"
 	"encoding/json"
 	"strings"
-	"github.com/go-xweb/log"
+	"log"
 )
 
 var Substitution_vars string = `{
