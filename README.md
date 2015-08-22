@@ -4,6 +4,7 @@
 Doc in English click [here](https://github.com/baiyuxiong/gomail/blob/master/README_en.md)
 
 # 安装
+首先安装statgo，参考： https://github.com/akhenakh/statgo
 
 ````
 go get github.com/baiyuxiong/gomail

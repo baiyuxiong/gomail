@@ -2,6 +2,7 @@
 mail sender using redis as data storage written by go(golang.org)
 
 # Install
+Install statgo first, Visit https://github.com/akhenakh/statgo for details
 
 ````
 go get githuc.com/baiyuxiong/gomail
