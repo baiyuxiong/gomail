@@ -14,7 +14,6 @@ import (
 	"strconv"
 	"time"
 	"errors"
-	"html/template"
 	"github.com/baiyuxiong/gomail/status"
 )
 
@@ -96,41 +95,7 @@ func configRoutes() {
 	// GET
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 
-		messages := make([]string,0)
-
-		CPUStats,CPUStatsMsg := status.CPUStats()
-		if len(CPUStatsMsg) >0{
-			messages = append(messages,CPUStatsMsg)
-		}
-
-		FSInfos,FSInfosMsg := status.FSInfos()
-		if len(FSInfosMsg) >0{
-			messages = append(messages,FSInfosMsg)
-		}
-
-		MemcachedStatus,MemcachedStatusMsg := status.MemcachedStatus()
-		if len(MemcachedStatusMsg) >0{
-			messages = append(messages,MemcachedStatusMsg)
-		}
-
-		RedisStatus,RedisStatusMsg := status.RedisStatus()
-		if len(RedisStatusMsg) >0{
-			messages = append(messages,RedisStatusMsg)
-		}
-
-
-		data := map[string]interface{}{
-			"messages" : messages,
-			"memcached":template.HTML(MemcachedStatus),
-			"redis":template.HTML(RedisStatus),
-			//"hostInfos":template.HTML(status.HostInfos()),
-			"CPUStats":template.HTML(CPUStats),
-			"FSInfos":template.HTML(FSInfos),
-			"MemStats":template.HTML(status.MemStats()),
-			"NetIOStats":template.HTML(status.NetIOStats()),
-			"ProcessStats":template.HTML(status.ProcessStats()),
-			"PagesStats":template.HTML(status.PagesStats()),
-		}
+		data := status.Check()
 
 		Render(w,"status/index.html",data);
 	})

@@ -15,10 +15,10 @@ import (
 
 var SendcloudSender = &Sender{
 	Name:"sendcloud",
-	Run:sendEmailBySendcloud,
+	Run:SendEmailBySendcloud,
 }
 
-func sendEmailBySendcloud(data string) (l model.EmailLog) {
+func SendEmailBySendcloud(data string) (l model.EmailLog) {
 	log.Println("sendEmailBySendcloud...")
 
 	l = model.EmailLog{

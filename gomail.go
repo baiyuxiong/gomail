@@ -10,6 +10,7 @@ import (
 	"os/signal"
 	"syscall"
 	"log"
+	"github.com/baiyuxiong/gomail/status"
 )
 
 func main() {
@@ -29,6 +30,7 @@ func main() {
 
 	go mail.Start()
 
+	go status.CheckInterval()
 
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
