@@ -32,7 +32,7 @@ func FSInfos() (string,string) {
 	status := ""
 	for _,v := range vs{
 		status += "\n"+v.String()
-		if v.Free == 0 || (v.Size >0 && v.Free >0 && v.Size/v.Free > 9){
+		if v.Size>0 && (v.Free == 0 || ( v.Free >0 && v.Size/v.Free > 9)){
 			message = "硬盘空间紧张，请检查"
 		}
 	}
