@@ -103,6 +103,8 @@ func (m *MailClient)StartSendMail() {
 
 		if err != nil {
 			log.Println("startSendMail - redis BRPOP error : ", err.Error())
+			m.closeMailConn()
+			m.closeLogConn()
 			time.Sleep(time.Second*10)
 		}else {
 			log.Println("startSendMail - get job, start send...")
